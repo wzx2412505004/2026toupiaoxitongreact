@@ -8,29 +8,24 @@ contract Voting {
         string name;
         uint256 voteCount;
     }
-
     // 合约管理员
     address public admin;
     // 候选人数组
     Candidate[] public candidates;
     // 记录已投票的地址
     mapping(address => bool) public hasVoted;
-
     // 事件
     event CandidateAdded(uint256 id, string name);
     event Voted(address indexed voter, uint256 candidateId);
-
     // 修饰器：仅管理员
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin can call this function");
         _;
     }
-
     // 构造函数
     constructor() {
         admin = msg.sender;
     }
-
     function addCandidate(string memory _name) public onlyAdmin {
         uint256 candidateId = candidates.length;
         candidates.push(
@@ -38,7 +33,6 @@ contract Voting {
         );
         emit CandidateAdded(candidateId, _name);
     }
-
     function vote(uint256 _candidateId) public {
         require(!hasVoted[msg.sender], "You have already voted");
         require(_candidateId < candidates.length, "Invalid candidate ID");
@@ -48,22 +42,18 @@ contract Voting {
 
         emit Voted(msg.sender, _candidateId);
     }
-
     function getCandidates() public view returns (Candidate[] memory) {
         return candidates;
     }
-
     function getCandidateCount() public view returns (uint256) {
         return candidates.length;
     }
-
-    function getCandidate(uint256 _candidateId)
-        public view returns (Candidate memory)
-    {
+    function getCandidate(
+        uint256 _candidateId
+    ) public view returns (Candidate memory) {
         require(_candidateId < candidates.length, "Invalid candidate ID");
         return candidates[_candidateId];
     }
-
     function checkIfVoted(address _voter) public view returns (bool) {
         return hasVoted[_voter];
     }

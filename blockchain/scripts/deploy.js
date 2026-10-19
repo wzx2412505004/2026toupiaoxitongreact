@@ -1,5 +1,4 @@
 const hre = require("hardhat");
-
 async function main() {
   console.log("deploy voting contract......");
   // 部署合约
@@ -18,10 +17,10 @@ async function main() {
   console.log("Deployment complete!");
 
   // 输出合约地址，供前端调用
-  console.log("======================================");
+  console.log("=====================================");
   console.log("Contract Address (copy this for frontend):");
   console.log(address);
-  console.log("======================================");
+  console.log("=====================================");
 }
 
 main().catch((error) => {
